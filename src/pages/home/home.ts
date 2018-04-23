@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { HttpClient , HttpHeaders } from '@angular/common/http';
+import { Base64 } from '@ionic-native/base64';
 
 @Component({
   selector: 'page-home',
@@ -8,19 +9,22 @@ import { HttpClient , HttpHeaders } from '@angular/common/http';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController , public http : HttpClient) {
+constructor(  
+            public navCtrl: NavController , 
+            public http : HttpClient) {
 
   }
 
     getData(){
 
-        let headers = new HttpHeaders();
-        headers = headers.append('Content-Type', 'application/json');
-        headers = headers.append('Authorization', 'Basic youToken' );
 
+                    let token = btoa("userName:Password");
 
+                    let headers = new HttpHeaders();
+                    headers = headers.append('Content-Type', 'application/json');
+                    headers = this.headers.append('Authorization', 'Basic '+token );
 
-         let urlData                        : any = "yourUrl/getData.xsjs";
+          let urlData                        : any = "yourUrl/getData.xsjs";
 
       this.http.get(urlData ,  {headers: headers}  )
       .subscribe((data : any) =>
@@ -31,6 +35,9 @@ export class HomePage {
       {
          console.dir(error);
       });
+
+
+
    }
 
 
